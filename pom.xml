@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>net.ladstatt.javacv</groupId>
+    <artifactId>javacv-webcam</artifactId>
+    <version>2020.2-SNAPSHOT</version>
+
+    <name>net.ladstatt.javacv.javacv-webcam</name>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <scala.major.version>2.13</scala.major.version>
+        <scala.full.version>${scala.major.version}.2</scala.full.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.full.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>4.3.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.major.version}</scalaVersion>
+                    <args>
+                        <arg>-deprecation</arg>
+                        <arg>-encoding</arg>
+                        <arg>utf-8</arg>
+                        <arg>-explaintypes</arg>
+                        <arg>-feature</arg>
+                        <arg>-language:existentials</arg>
+                        <arg>-language:experimental.macros</arg>
+                        <arg>-language:higherKinds</arg>
+                        <arg>-language:implicitConversions</arg>
+                        <arg>-unchecked</arg>
+                        <arg>-Xcheckinit</arg>
+                        <arg>-Xlint:adapted-args</arg>
+                        <arg>-Xlint:constant</arg>
+                        <arg>-Xlint:delayedinit-select</arg>
+                        <arg>-Xlint:doc-detached</arg>
+                        <arg>-Xlint:inaccessible</arg>
+                        <arg>-Xlint:infer-any</arg>
+                        <arg>-Xlint:missing-interpolator</arg>
+                        <arg>-Xlint:nullary-override</arg>
+                        <arg>-Xlint:nullary-unit</arg>
+                        <arg>-Xlint:option-implicit</arg>
+                        <arg>-Xlint:package-object-classes</arg>
+                        <arg>-Xlint:poly-implicit-overload</arg>
+                        <arg>-Xlint:private-shadow</arg>
+                        <arg>-Xlint:stars-align</arg>
+                        <arg>-Xlint:type-parameter-shadow</arg>
+
+                        <arg>-Ywarn-dead-code</arg>
+                        <arg>-Ywarn-extra-implicit</arg>
+                        <arg>-Ywarn-numeric-widen</arg>
+                        <arg>-Ywarn-unused:implicits</arg>
+                        <arg>-Ywarn-unused:imports</arg>
+                        <arg>-Ywarn-unused:locals</arg>
+                        <arg>-Ywarn-unused:params</arg>
+                        <arg>-Ywarn-unused:patvars</arg>
+                        <arg>-Ywarn-unused:privates</arg>
+                        <arg>-Ywarn-value-discard</arg>
+                        <arg>-Yrangepos</arg>
+                    </args>
+
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>net.ladstatt.javacv.SwingDemo</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
+
+
