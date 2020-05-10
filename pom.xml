@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.major.version>2.13</scala.major.version>
         <scala.full.version>${scala.major.version}.2</scala.full.version>
+        <openjfx.version>15-ea+4</openjfx.version>
     </properties>
 
     <dependencies>
@@ -25,6 +26,26 @@
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
             <version>1.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${openjfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${openjfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>1.3.8</version>
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxscala_${scala.major.version}</artifactId>
+            <version>0.27.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -92,7 +113,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>net.ladstatt.javacv.SwingDemo</mainClass>
+                            <mainClass>net.ladstatt.javacv.WebcamComparisonApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
