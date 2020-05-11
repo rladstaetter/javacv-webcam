@@ -14,15 +14,18 @@ import org.bytedeco.opencv.opencv_core.Mat
  */
 class DirectBufferWebcamFXController extends WebcamFXController {
 
+  val javaCVMat = new Mat
+
+  /** create buffer only once saves much time! */
+  lazy val buffer: ByteBuffer = javaCVMat.createBuffer()
+
   protected def updateView(frame: Frame): Unit = {
     val w = frame.imageWidth
     val h = frame.imageHeight
 
     val mat = javaCVConv.convert(frame)
-    val javCVMat = new Mat
-    cvtColor(mat, javCVMat, COLOR_BGR2BGRA)
+    cvtColor(mat, javaCVMat, COLOR_BGR2BGRA)
 
-    val buffer: ByteBuffer = javCVMat.createBuffer()
     val pb = new PixelBuffer(w, h, buffer, formatByte)
     val wi = new WritableImage(pb)
     videoView.setImage(wi)
