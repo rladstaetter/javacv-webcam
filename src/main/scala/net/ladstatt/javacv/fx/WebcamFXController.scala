@@ -17,6 +17,10 @@ abstract class WebcamFXController extends Initializable {
 
   @FXML var videoView: ImageView = _
 
+  protected def updateView(frame: Frame): Unit
+
+  val javaCVConv = new OpenCVFrameConverter.ToMat
+
   val cameraActiveProperty = new SimpleBooleanProperty(true)
 
   def setCameraActive(isActive: Boolean): Unit = cameraActiveProperty.set(isActive)
@@ -52,18 +56,6 @@ abstract class WebcamFXController extends Initializable {
     PoorMansTimer.time(updateView(mat))
   }
 
-  // ca. 13 ms on my machine
-  /*
-  private def updateView(mat: Frame) = {
-    videoView.setImage(toImage(mat))
-  }*/
-
-
-  protected def updateView(frame: Frame): Unit
-
-
-  val javaCVConv = new OpenCVFrameConverter.ToMat
-  val formatByte: WritablePixelFormat[ByteBuffer] = PixelFormat.getByteBgraPreInstance
 
 
   override def initialize(url: URL, resourceBundle: ResourceBundle): Unit = {

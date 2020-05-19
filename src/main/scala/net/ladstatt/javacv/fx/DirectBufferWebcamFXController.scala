@@ -19,6 +19,8 @@ class DirectBufferWebcamFXController extends WebcamFXController {
   /** create buffer only once saves much time! */
   lazy val buffer: ByteBuffer = javaCVMat.createBuffer()
 
+  val formatByte: WritablePixelFormat[ByteBuffer] = PixelFormat.getByteBgraPreInstance
+
   protected def updateView(frame: Frame): Unit = {
     val w = frame.imageWidth
     val h = frame.imageHeight
