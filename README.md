@@ -18,7 +18,7 @@ It will take some time until it is finished, especially when run the first time.
 
 Again, on the command line, enter:
 
-    java -jar target/javacv-webcam-2020.2.1-SNAPSHOT-jar-with-dependencies.jar
-    
-A window should appear and chances are high you can see yourself on the monitor.
+    mvn javafx:run
+     
+A window should appear and it is likely that you can see yourself on the monitor.
 
