@@ -1,7 +1,6 @@
 package net.ladstatt.javacv.fx
 
 import java.net.URL
-import java.nio.ByteBuffer
 import java.util.ResourceBundle
 
 import javafx.beans.property.SimpleBooleanProperty
@@ -63,5 +62,6 @@ abstract class WebcamFXController extends Initializable {
       (frame: Frame) => setVideoView(frame)
       , t => t.printStackTrace()
       , () => println("Videostream stopped..."))
+    ( )
   }
 }
