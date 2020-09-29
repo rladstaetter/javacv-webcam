@@ -5,8 +5,8 @@ import javafx.fxml.{FXMLLoader, JavaFXBuilderFactory}
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.stage.Stage
+import zio.Runtime
 
-import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Success, Try}
 
 /**
@@ -14,7 +14,9 @@ import scala.util.{Failure, Success, Try}
  */
 class WebcamFX extends Application {
 
-  val JavaFXConverterFXML = "/net/ladstatt/javacv/fx/javafxconverter.fxml"
+  /** only one zio runtime per application */
+  val runtime: Runtime[zio.ZEnv] = Runtime.default
+
   val DirectBufferFXML = "/net/ladstatt/javacv/fx/directbuffer.fxml"
 
   def mkFxmlLoader(fxmlResource: String): FXMLLoader = {
@@ -28,19 +30,16 @@ class WebcamFX extends Application {
 
   override def start(stage: Stage): Unit =
     Try {
-      val (fxmlResource, title) =
-        getParameters.getRaw.asScala.headOption match {
-          case Some("classic") => (JavaFXConverterFXML, "WebcamFX with JavaFXConverter")
-          case _ => (DirectBufferFXML, "WebcamFX with DirectBuffer")
-        }
-      stage.setTitle(title)
-      val fxmlLoader = mkFxmlLoader(fxmlResource)
+      stage.setTitle("WebcamFX")
+      val fxmlLoader = mkFxmlLoader(DirectBufferFXML)
       val parent = fxmlLoader.load[BorderPane]()
       val controller = fxmlLoader.getController[WebcamFXController]
-      val scene = new Scene(parent)
 
-      stage.setScene(scene)
+      stage.setScene(new Scene(parent))
 
+      stage.setOnShown(_ => {
+        controller.setZioRuntime(runtime)
+      })
       stage.setOnCloseRequest(_ => {
         controller.shutdown()
         stage.close()

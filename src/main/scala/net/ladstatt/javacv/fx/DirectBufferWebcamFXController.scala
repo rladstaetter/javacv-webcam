@@ -3,6 +3,7 @@ package net.ladstatt.javacv.fx
 
 import java.nio.ByteBuffer
 
+import javafx.application.Platform
 import javafx.scene.image._
 import org.bytedeco.javacv.Frame
 import org.bytedeco.opencv.global.opencv_imgproc._
@@ -30,7 +31,10 @@ class DirectBufferWebcamFXController extends WebcamFXController {
 
     val pb = new PixelBuffer(w, h, buffer, formatByte)
     val wi = new WritableImage(pb)
-    videoView.setImage(wi)
+    Platform.runLater(new Runnable {
+      override def run(): Unit = videoView.setImage(wi)
+    })
+
   }
 
 }
