@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.ladstatt.javacv</groupId>
     <artifactId>javacv-webcam</artifactId>
-    <version>2020.2.1-SNAPSHOT</version>
+    <version>2020.3.0-SNAPSHOT</version>
 
     <name>net.ladstatt.javacv.javacv-webcam</name>
 
@@ -11,20 +11,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scala.major.version>2.13</scala.major.version>
-        <scala.version>${scala.major.version}.3</scala.version>
         <openjfx.version>16-ea+1</openjfx.version>
         <client.plugin.version>0.1.31</client.plugin.version>
         <client.target>host</client.target> <!-- other values can be ios,android -->
         <main.class>net.ladstatt.javacv.fx.WebcamFXApp</main.class>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -40,11 +32,13 @@
             <artifactId>javacv-platform</artifactId>
             <version>1.5.3</version>
         </dependency>
+        <!--
         <dependency>
-            <groupId>dev.zio</groupId>
-            <artifactId>zio_${scala.major.version}</artifactId>
-            <version>1.0.1</version>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>opencv</artifactId>
+            <version>4.3.0-1.5.3</version>
         </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>
@@ -53,9 +47,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <skipMain>false</skipMain>
-                    <skip>true</skip>
                     <release>11</release>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -81,62 +75,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>4.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <sendJavaToScalac>false</sendJavaToScalac>
-                    <scalaVersion>${scala.version}</scalaVersion>
-                    <args>
-                        <arg>-deprecation</arg>
-                        <arg>-encoding</arg>
-                        <arg>utf-8</arg>
-                        <arg>-explaintypes</arg>
-                        <arg>-feature</arg>
-                        <arg>-language:existentials</arg>
-                        <arg>-language:experimental.macros</arg>
-                        <arg>-language:higherKinds</arg>
-                        <arg>-language:implicitConversions</arg>
-                        <arg>-unchecked</arg>
-                        <arg>-Xcheckinit</arg>
-                        <arg>-Xlint:adapted-args</arg>
-                        <arg>-Xlint:constant</arg>
-                        <arg>-Xlint:delayedinit-select</arg>
-                        <arg>-Xlint:doc-detached</arg>
-                        <arg>-Xlint:inaccessible</arg>
-                        <arg>-Xlint:infer-any</arg>
-                        <arg>-Xlint:missing-interpolator</arg>
-                        <arg>-Xlint:nullary-unit</arg>
-                        <arg>-Xlint:option-implicit</arg>
-                        <arg>-Xlint:package-object-classes</arg>
-                        <arg>-Xlint:poly-implicit-overload</arg>
-                        <arg>-Xlint:private-shadow</arg>
-                        <arg>-Xlint:stars-align</arg>
-                        <arg>-Xlint:type-parameter-shadow</arg>
 
-                        <arg>-Ywarn-dead-code</arg>
-                        <arg>-Ywarn-extra-implicit</arg>
-                        <arg>-Ywarn-numeric-widen</arg>
-                        <arg>-Ywarn-unused:implicits</arg>
-                        <arg>-Ywarn-unused:imports</arg>
-                        <arg>-Ywarn-unused:locals</arg>
-                        <arg>-Ywarn-unused:params</arg>
-                        <arg>-Ywarn-unused:patvars</arg>
-                        <arg>-Ywarn-unused:privates</arg>
-                        <arg>-Ywarn-value-discard</arg>
-                        <arg>-Yrangepos</arg>
-                    </args>
-                </configuration>
-            </plugin>
             <!--
          <plugin>
              <groupId>com.gluonhq</groupId>
@@ -177,21 +116,6 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <includePathExceptionsInClasspath>true</includePathExceptionsInClasspath>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
