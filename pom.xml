@@ -35,12 +35,6 @@
             <artifactId>javacv-platform</artifactId>
             <version>${javacv.version}</version>
         </dependency>
-        <!-- needed for graal compilation for some reason -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -77,7 +71,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+<!--
             <plugin>
                 <groupId>com.gluonhq</groupId>
                 <artifactId>client-maven-plugin</artifactId>
@@ -94,17 +88,18 @@
                     </attachList>
                     <reflectionList>
                         <list>net.ladstatt.javacv.fx.WebcamFXController</list>
-                        <!--
                         <list>org.bytedeco.javacpp.presets.javacpp</list>
                         <list>org.bytedeco.openblas.global.openblas_nolapack</list>
                         <list>org.bytedeco.javacpp.Loader</list>
-                        -->
-                        <list>org.slf4j.Logger</list>
                     </reflectionList>
-                    <nativeImageArgs>--allow-incomplete-classpath</nativeImageArgs>
+                    <resourcesList>
+                        <list>.*.dylib$</list>
+                    </resourcesList>
+                    <nativeImageArgs>- -allow-incomplete-classpath</nativeImageArgs>
                     <graalvmHome>${graalvm.home}</graalvmHome>
                 </configuration>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
