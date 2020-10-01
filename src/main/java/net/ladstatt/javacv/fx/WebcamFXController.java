@@ -81,21 +81,19 @@ public class WebcamFXController implements Initializable {
         } catch (FrameGrabber.Exception e) {
             e.printStackTrace();
         }
-        new Thread(new Runnable() {
-            public void run() {
-                while (getCameraActive()) {
-                    try {
-                        Frame frame = frameGrabber.grab();
-                        setVideoView(frame);
-                    } catch (FrameGrabber.Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+        new Thread(() -> {
+            while (getCameraActive()) {
                 try {
-                    frameGrabber.release();
+                    Frame frame = frameGrabber.grab();
+                    setVideoView(frame);
                 } catch (FrameGrabber.Exception e) {
                     e.printStackTrace();
                 }
+            }
+            try {
+                frameGrabber.release();
+            } catch (FrameGrabber.Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }

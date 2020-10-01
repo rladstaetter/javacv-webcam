@@ -2,12 +2,11 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane prefHeight="830.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+
+<BorderPane prefWidth="1280.0" prefHeight="720" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="net.ladstatt.javacv.fx.WebcamFXController">
     <center>
-        <ImageView fx:id="videoView"
-                   pickOnBounds="true"
-                   preserveRatio="true"/>
+        <ImageView fx:id="videoView" preserveRatio="true"/>
     </center>
 </BorderPane>
 

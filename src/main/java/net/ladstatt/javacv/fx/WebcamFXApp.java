@@ -1,13 +1,11 @@
 package net.ladstatt.javacv.fx;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.net.URL;
 
@@ -31,7 +29,6 @@ public class WebcamFXApp extends Application {
         FXMLLoader fxmlLoader = mkFxmlLoader(fxml);
         Parent parent = fxmlLoader.load();
         final WebcamFXController controller = fxmlLoader.getController();
-
         stage.setScene(new Scene(parent));
 
         stage.setOnCloseRequest(windowEvent -> {

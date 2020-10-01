@@ -11,10 +11,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openjfx.version>16-ea+1</openjfx.version>
+        <openjfx.version>16-ea+2</openjfx.version>
         <client.plugin.version>0.1.31</client.plugin.version>
         <client.target>host</client.target> <!-- other values can be ios,android -->
         <main.class>net.ladstatt.javacv.fx.WebcamFXApp</main.class>
+        <javacv.version>1.5.3</javacv.version>
+        <graalvm.home>/Users/lad/.sdkman/candidates/java/20.2.0.r11-grl</graalvm.home>
     </properties>
     <dependencies>
         <dependency>
@@ -27,18 +29,18 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${openjfx.version}</version>
         </dependency>
+        <!-- include everything javacv related for all platforms -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
-            <version>1.5.3</version>
+            <version>${javacv.version}</version>
         </dependency>
-        <!--
+        <!-- needed for graal compilation for some reason -->
         <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>opencv</artifactId>
-            <version>4.3.0-1.5.3</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.12</version>
         </dependency>
-        -->
     </dependencies>
     <build>
         <plugins>
@@ -76,35 +78,33 @@
                 </executions>
             </plugin>
 
-            <!--
-         <plugin>
-             <groupId>com.gluonhq</groupId>
-             <artifactId>client-maven-plugin</artifactId>
-             <version>${client.plugin.version}</version>
-             <configuration>
-                 <target>${client.target}</target>
-                 <mainClass>${main.class}</mainClass>
-                 <verbose>true</verbose>
-                 <attachList>
-                     <list>display</list>
-                     <list>lifecycle</list>
-                     <list>statusbar</list>
-                     <list>storage</list>
-                 </attachList>
-                 <reflectionList>
-                     <list>net.ladstatt.javacv.fx.DirectBufferWebcamFXController</list>
-                     <list>net.ladstatt.javacv.fx.JavaFXConverterWebcamFXController</list>
-                     <list>net.ladstatt.javacv.fx.WebcamFXController</list>
-                     <list>org.slf4j.Logger</list>
-                     <list>net.ladstatt.javacv.fx.WebcamFX</list>
-                     <list>org.bytedeco.javacpp.presets.javacpp</list>
-                     <list>org.bytedeco.openblas.global.openblas_nolapack</list>
-                     <list>org.bytedeco.javacpp.Loader</list>
-                 </reflectionList>
-                 <graalvmHome>/Users/lad/.sdkman/candidates/java/20.2.0.r11-grl</graalvmHome>
-             </configuration>
-         </plugin>
-  -->
+            <plugin>
+                <groupId>com.gluonhq</groupId>
+                <artifactId>client-maven-plugin</artifactId>
+                <version>${client.plugin.version}</version>
+                <configuration>
+                    <target>${client.target}</target>
+                    <mainClass>${main.class}</mainClass>
+                    <verbose>true</verbose>
+                    <attachList>
+                        <list>display</list>
+                        <list>lifecycle</list>
+                        <list>statusbar</list>
+                        <list>storage</list>
+                    </attachList>
+                    <reflectionList>
+                        <list>net.ladstatt.javacv.fx.WebcamFXController</list>
+                        <!--
+                        <list>org.bytedeco.javacpp.presets.javacpp</list>
+                        <list>org.bytedeco.openblas.global.openblas_nolapack</list>
+                        <list>org.bytedeco.javacpp.Loader</list>
+                        -->
+                        <list>org.slf4j.Logger</list>
+                    </reflectionList>
+                    <nativeImageArgs>--allow-incomplete-classpath</nativeImageArgs>
+                    <graalvmHome>${graalvm.home}</graalvmHome>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -113,8 +113,10 @@
                     <jlinkVerbose>true</jlinkVerbose>
                     <mainClass>${main.class}</mainClass>
                     <jlinkImageName>javacv-webcam</jlinkImageName>
+                    <jlinkVerbose>true</jlinkVerbose>
                     <noHeaderFiles>true</noHeaderFiles>
-                    <includePathExceptionsInClasspath>true</includePathExceptionsInClasspath>
+                    <noManPages>true</noManPages>
+                    <launcher>jwebcam</launcher>
                 </configuration>
             </plugin>
         </plugins>
