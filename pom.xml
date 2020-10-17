@@ -12,11 +12,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <openjfx.version>16-ea+2</openjfx.version>
-        <client.plugin.version>0.1.31</client.plugin.version>
-        <client.target>host</client.target> <!-- other values can be ios,android -->
+        <javacv.version>1.5.4</javacv.version>
         <main.class>net.ladstatt.javacv.fx.WebcamFXApp</main.class>
-        <javacv.version>1.5.3</javacv.version>
+        <!-- for native compilation with graalvm -->
+        <!--
+        <client.plugin.version>0.1.31</client.plugin.version>
+        --><!-- other values can be ios,android -->
+        <!--
+        <client.target>host</client.target>
         <graalvm.home>/Users/lad/.sdkman/candidates/java/20.2.0.r11-grl</graalvm.home>
+        -->
     </properties>
     <dependencies>
         <dependency>
@@ -103,10 +108,10 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.5</version>
                 <configuration>
                     <jlinkVerbose>true</jlinkVerbose>
-                    <mainClass>${main.class}</mainClass>
+                    <mainClass>net.ladstatt.javacv.webcam/${main.class}</mainClass>
                     <jlinkImageName>javacv-webcam</jlinkImageName>
                     <jlinkVerbose>true</jlinkVerbose>
                     <noHeaderFiles>true</noHeaderFiles>
