@@ -31,6 +31,16 @@ If you peek into the ``javacv-webcam`` directory.
 
 Attention: If you are using Windows or Linux you'll have to adapt module-info.java to include native libraries of suitable for those platforms. On MacOsX, you may have problems with permissions to access your webcam from a java application, make sure to allow access in your system preferences.
 
+## Compile and run with client-maven-plugin
+
+This project contains also a configuration for compiling it to a native image using [GraalVM](https://www.graalvm.org/). You have
+to download and install GraalVM in a recent version (I tested it with 20.2.0) and then compile and run it with following command:
+
+    mvn clean client:build client:run -Djavacpp.platform.custom -Djavacpp.platform.host -Dgraalvm.home=/path/to/your/graalvm/distribution
+    
+After downloading necessary toolings, dependencies and compiling and linking (takes some time) a JavaFX application which uses
+your webcam will start.    
+
 ## Links
 
 - Have a look at [https://openjfx.io](https://openjfx.io) where you can find more information and introductory examples for developing JavaFX applications. 

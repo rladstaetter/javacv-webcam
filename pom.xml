@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.ladstatt.javacv</groupId>
     <artifactId>javacv-webcam</artifactId>
-    <version>2020.3.0-SNAPSHOT</version>
+    <version>2020.3.1-SNAPSHOT</version>
 
     <name>net.ladstatt.javacv.javacv-webcam</name>
 
@@ -15,11 +15,9 @@
         <javacv.version>1.5.4</javacv.version>
         <main.class>net.ladstatt.javacv.fx.WebcamFXApp</main.class>
         <!-- for native compilation with graalvm -->
-        <!--
-        <client.plugin.version>0.1.31</client.plugin.version>
-        --><!-- other values can be ios,android -->
-        <!--
+        <client.plugin.version>0.1.33</client.plugin.version>
         <client.target>host</client.target>
+        <!-- uncomment and provide your path
         <graalvm.home>/Users/lad/.sdkman/candidates/java/20.2.0.r11-grl</graalvm.home>
         -->
     </properties>
@@ -39,6 +37,14 @@
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
             <version>${javacv.version}</version>
+            <exclusions>
+                <!-- if not excluded linking fails withc client-maven-plugin (???) -->
+                <exclusion>
+                    <groupId>org.bytedeco</groupId>
+                    <artifactId>leptonica-platform</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
     </dependencies>
     <build>
@@ -76,7 +82,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--
             <plugin>
                 <groupId>com.gluonhq</groupId>
                 <artifactId>client-maven-plugin</artifactId>
@@ -100,11 +105,10 @@
                     <resourcesList>
                         <list>.*.dylib$</list>
                     </resourcesList>
-                    <nativeImageArgs>- -allow-incomplete-classpath</nativeImageArgs>
+                    <nativeImageArgs>--allow-incomplete-classpath</nativeImageArgs>
                     <graalvmHome>${graalvm.home}</graalvmHome>
                 </configuration>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
